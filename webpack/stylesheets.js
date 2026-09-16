@@ -33,6 +33,7 @@ module.exports = {
               postcssOptions: {
                 sourceMap: true,
                 plugins: [
+                  require("tailwindcss")(),
                   require("cssnano")(),
                   "postcss-preset-env", // applies autoprefixer
                 ],

@@ -56,6 +56,29 @@ SwaggerUIBundle({
 })
 ```
 
+### shadcn/ui shell
+
+The Topbar is built with [shadcn/ui](https://ui.shadcn.com/) components
+(Radix UI + Tailwind CSS). The generic `Button` and `Input` components are also
+replaced with their shadcn equivalents, while the rest of the UI keeps the
+legacy look.
+
+The integration is intentionally isolated so it cannot clash with the existing
+styles:
+
+- Tailwind runs with `prefix: "ui-"`, `important: true` and
+  `preflight: false` (see `tailwind.config.js`).
+- Design tokens are defined in `src/style/_shadcn.scss`, inlined at the top of
+  `main.scss`; `html.dark-mode` maps to Tailwind's `dark` variant.
+- shadcn primitives live in `src/shadcn/components/ui/` and are wired through
+  the plugin system (`src/core/plugins/shadcn`) without modifying any core
+  component. The plugin is registered in the core base preset, so the shell is
+  active in standalone builds by default.
+
+Because the standalone preset bundles its own copy of React, hook based
+components must live in the core bundle; that is why the plugin is registered
+from `src/core/plugins/shadcn` rather than the standalone preset.
+
 ### Go package
 
 The repository root is also a Go module that embeds `dist/`:

@@ -1,6 +1,11 @@
 @use "sass:meta";
 @use "type";
 
+// shadcn/ui layer (Tailwind utilities + design tokens). Kept at the top level
+// so the utilities are available to the plugin components regardless of the
+// .swagger-ui scoping of the legacy styles.
+@include meta.load-css("shadcn");
+
 .swagger-ui {
   container-name: swagger-ui;
   container-type: inline-size;

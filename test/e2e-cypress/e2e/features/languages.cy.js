@@ -1,15 +1,13 @@
 describe("configuration options: `languages` and `languages.primaryName`", () => {
   it("should render a language switcher", () => {
     cy.visit("/?configUrl=/configs/languages.yaml")
-      .get("#select-language")
-      .children()
+    cy.get('[data-testid="language-select"]').click()
+    cy.get('[role="option"]')
       .should("have.length", 2)
-      .get("#select-language > option")
       .eq(0)
       .should("have.text", "English")
-      .get("#select-language > option")
-      .eq(1)
-      .should("have.text", "中文")
+    cy.get('[role="option"]').eq(1).should("have.text", "中文")
+    cy.get('[data-testid="language-select"]').type("{esc}")
   })
 
   it("should render the first language by default", () => {
@@ -23,17 +21,16 @@ describe("configuration options: `languages` and `languages.primaryName`", () =>
 
   it("should respect a `languages.primaryName`", () => {
     cy.visit("/?configUrl=/configs/languages-primary-name.yaml")
-      .get("#select-language")
-      .should("contain.value", "/documents/features/urls/2.yaml")
+      .get('[data-testid="language-select"]')
+      .should("contain.text", "中文")
       .get("h1.title")
       .should("have.text", "TwoOAS 3.0")
   })
 
   it("should switch the displayed language on selection", () => {
     cy.visit("/?configUrl=/configs/languages.yaml")
-      .get("#select-language")
-      .select("/documents/features/urls/2.yaml")
-      .get("h1.title")
-      .should("have.text", "TwoOAS 3.0")
+    cy.get('[data-testid="language-select"]').click()
+    cy.get('[role="option"]').eq(1).click()
+    cy.get("h1.title").should("have.text", "TwoOAS 3.0")
   })
 })

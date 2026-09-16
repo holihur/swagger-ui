@@ -23,6 +23,7 @@ import DownloadUrlPlugin from "core/plugins/download-url"
 import SyntaxHighlightingPlugin from "core/plugins/syntax-highlighting"
 import VersionsPlugin from "core/plugins/versions"
 import SafeRenderPlugin from "core/plugins/safe-render"
+import ShadcnPlugin from "core/plugins/shadcn"
 // ad-hoc plugins
 import CoreComponentsPlugin from "core/presets/base/plugins/core-components"
 import FormComponentsPlugin from "core/presets/base/plugins/form-components"
@@ -42,6 +43,7 @@ const BasePreset = () => [
   JSONSchema5SamplesPlugin,
   CoreComponentsPlugin,
   FormComponentsPlugin,
+  ShadcnPlugin,
   SwaggerClientPlugin,
   AuthPlugin,
   DownloadUrlPlugin,

@@ -31,6 +31,17 @@ module.exports = {
       },
       extends: ["plugin:@typescript-eslint/recommended"],
     },
+    {
+      // Vendored shadcn/ui primitives and their adapters rely on TS-style
+      // props instead of propTypes.
+      files: [
+        "src/shadcn/**/*.{js,jsx,ts,tsx}",
+        "src/core/plugins/shadcn/**/*.{js,jsx}",
+      ],
+      rules: {
+        "react/prop-types": 0,
+      },
+    },
   ],
   settings: {
     react: {
