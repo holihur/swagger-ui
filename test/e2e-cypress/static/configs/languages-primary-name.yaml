@@ -1,0 +1,6 @@
+languages:
+- name: English
+  url: /documents/features/urls/1.yaml
+- name: 中文
+  url: /documents/features/urls/2.yaml
+languages.primaryName: 中文

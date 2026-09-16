@@ -53,6 +53,8 @@ const mappings = {
   fn: { typeCaster: objectTypeCaster },
   initialState: { typeCaster: objectTypeCaster },
   layout: { typeCaster: stringTypeCaster },
+  languages: { typeCaster: nullableArrayTypeCaster },
+  "languages.primaryName": { typeCaster: stringTypeCaster },
   maxDisplayedTags: {
     typeCaster: numberTypeCaster,
     defaultValue: defaultOptions.maxDisplayedTags,

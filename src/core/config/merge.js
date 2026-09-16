@@ -9,6 +9,7 @@
  * NOTE2: special handling of `domNode` option is now required as `deep-extend` will corrupt it (lodash.merge handles it correctly)
  * NOTE3: oauth2RedirectUrl option can be set to undefined. By expecting null instead of undefined, we can't use lodash.merge.
  * NOTE4: urls.primaryName needs to handled in special way, because it's an arbitrary property on Array instance
+ * NOTE5: languages.primaryName needs to handled in the same special way as urls.primaryName
  *
  * TODO(vladimir.gorej@gmail.com): remove deep-extend in favor of lodash.merge
  */
@@ -18,6 +19,7 @@ import typeCast from "./type-cast"
 const merge = (target, ...sources) => {
   let domNode = Symbol.for("domNode")
   let primaryName = Symbol.for("primaryName")
+  let languagePrimaryName = Symbol.for("languagePrimaryName")
   const sourcesWithoutExceptions = []
 
   for (const source of sources) {
@@ -39,6 +41,17 @@ const merge = (target, ...sources) => {
       delete sourceWithoutExceptions.urls.primaryName
     }
 
+    if (Object.hasOwn(sourceWithoutExceptions, "languages.primaryName")) {
+      languagePrimaryName = sourceWithoutExceptions["languages.primaryName"]
+      delete sourceWithoutExceptions["languages.primaryName"]
+    } else if (
+      Array.isArray(sourceWithoutExceptions.languages) &&
+      Object.hasOwn(sourceWithoutExceptions.languages, "primaryName")
+    ) {
+      languagePrimaryName = sourceWithoutExceptions.languages.primaryName
+      delete sourceWithoutExceptions.languages.primaryName
+    }
+
     sourcesWithoutExceptions.push(sourceWithoutExceptions)
   }
 
@@ -50,6 +63,13 @@ const merge = (target, ...sources) => {
 
   if (primaryName !== Symbol.for("primaryName") && Array.isArray(merged.urls)) {
     merged.urls.primaryName = primaryName
+  }
+
+  if (
+    languagePrimaryName !== Symbol.for("languagePrimaryName") &&
+    Array.isArray(merged.languages)
+  ) {
+    merged.languages.primaryName = languagePrimaryName
   }
 
   return typeCast(merged)

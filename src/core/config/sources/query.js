@@ -18,6 +18,8 @@ const optionsFromQuery = () => (options) => {
       acc["configUrl"] = value
     } else if (key === "urls.primaryName") {
       acc[key] = value
+    } else if (key === "languages.primaryName") {
+      acc[key] = value
     } else {
       acc = set(acc, key, value)
     }
